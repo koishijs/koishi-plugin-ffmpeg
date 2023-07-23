@@ -1,0 +1,22 @@
+{
+  "name": "koishi-plugin-ffmpeg",
+  "version": "1.0.0",
+  "description": "ffmpeg service for Koishi",
+  "main": "lib/index.js",
+  "author": "Anillc <i@anillc.cn>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "get-registry": "^1.1.0",
+    "typescript": "^5.1.6"
+  },
+  "peerDependencies": {
+    "koishi": "^4.13.9",
+    "koishi-plugin-downloads": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.4"
+  }
+}

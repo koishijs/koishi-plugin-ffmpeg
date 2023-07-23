@@ -4,6 +4,6 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "nereid-cli": "^0.0.7"
+    "nereid-cli": "^0.0.8"
   }
 }

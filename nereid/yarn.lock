@@ -784,10 +784,10 @@ negotiator@^0.6.3:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-nereid-cli@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/nereid-cli/-/nereid-cli-0.0.7.tgz#f6e123aa8e3e9d51b931041bbc41d61ff6666e62"
-  integrity sha512-MvPXJu+Bq7iLH0t/RFFtmFq1cMTR5DbOsOmvgpAOCkHhTz9+TsrRAIRwdT3m5KxoJtHZ/wmWDqD8RrwnehOXSw==
+nereid-cli@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/nereid-cli/-/nereid-cli-0.0.8.tgz#99ef2815e2613d6c5c8488ff0acf4f1f83ac9f1e"
+  integrity sha512-S+cvvmJKDo1pHF+ahPMeT8x/fA/JugWr3kCbkQTYy7zuUHaG99X02xVa3WuH0jwaPMfEWFV02Z2b7v1mLALuSQ==
   dependencies:
     archiver "^5.3.1"
     cac "^6.7.14"

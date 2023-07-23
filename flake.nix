@@ -13,7 +13,7 @@
       perSystem = { config, pkgs, system, ... }: {
         devshells.default = {
           env = [{ name = "NPM_TOKEN"; eval = "$(cat ~/.config/npm-token/NPM_TOKEN)"; }];
-          packages = with pkgs; [ gnutar unzip curl ];
+          packages = with pkgs; [ gnutar unzip curl yarn ];
         };
       };
     };

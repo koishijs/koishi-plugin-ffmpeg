@@ -1,21 +1,9 @@
 #!/usr/bin/env bash
 set -eu
 
-SOURCE='npm://@koishijs-assets/ffmpeg?registry=https://registry.npmmirror.com'
-function download() {
-  DOWNLOADED=$(yarn -s nereid-cli download $1 "$SOURCE")
-  cp -r $DOWNLOADED $1
-}
-
-rm -rf ffmpeg-*
 LINUX_ARCH='amd64 i686 arm64 armel'
 
-for ARCH in $LINUX_ARCH; do
-  download ffmpeg-linux-$ARCH
-done
-download ffmpeg-windows-amd64
-download ffmpeg-macos-amd64
-
+rm -rf ffmpeg-*
 rm -rf .tmp
 mkdir .tmp
 
