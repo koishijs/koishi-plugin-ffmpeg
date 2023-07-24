@@ -2,6 +2,7 @@ import { Context, Schema } from 'koishi'
 import {} from 'koishi-plugin-downloads'
 import * as os from 'os'
 import registry from 'get-registry'
+import { FFmpeg } from './ffmpeg'
 
 const platform = os.platform()
 const arch = os.arch()
@@ -17,7 +18,8 @@ export async function apply(ctx: Context) {
     `npm://@koishijs-assets/ffmpeg?registry=${await registry()}`
   ], bucket())
   const path = await task.promise
-  console.log(path)
+  const executable = platform === 'win32' ? `${path}/ffmpeg.exe` : `${path}/ffmpeg`
+  ctx.plugin(FFmpeg, executable)
 }
 
 function bucket() {
