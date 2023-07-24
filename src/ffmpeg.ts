@@ -8,13 +8,11 @@ declare module 'koishi' {
   }
 }
 
-type RunReturn<T> = T extends 'file' 
-  ? Promise<void>
-  : T extends 'buffer'
-    ? Promise<Buffer>
-    : T extends 'stream'
-      ? Readable
-      : never
+interface RunReturn {
+  file: Promise<void>
+  buffer: Promise<Buffer>
+  stream: Readable
+}
 
 export class FFmpegBuilder {
   _input: string | Buffer | Readable
@@ -40,10 +38,7 @@ export class FFmpegBuilder {
     return this
   }
 
-  run<T extends 'file' | 'buffer' | 'stream'>(
-    type: T,
-    path?: string,
-  ): RunReturn<T> {
+  run<T extends keyof RunReturn>(type: T, path?: string): RunReturn[T] {
     const options: string[] = ['-y']
     if (typeof this._input === 'string') {
       options.push(...[...this.inputOptions, '-i', this._input])
