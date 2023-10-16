@@ -26,7 +26,7 @@ function bucket() {
   let bucket = 'ffmpeg-'
   switch (platform) {
     case 'win32':
-      bucket += 'widnows-'
+      bucket += 'windows-'
       break
     case 'linux':
       bucket += 'linux-'
