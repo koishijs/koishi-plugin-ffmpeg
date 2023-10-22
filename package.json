@@ -5,6 +5,10 @@
   "main": "lib/index.js",
   "author": "Anillc <i@anillc.cn>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koishijs/koishi-plugin-ffmpeg.git"
+  },
   "files": [
     "lib"
   ],
@@ -21,5 +25,10 @@
   "devDependencies": {
     "@types/node": "^20.4.4",
     "typescript": "^5.1.6"
+  },
+  "koishi": {
+    "service": {
+      "implements": ["ffmpeg"]
+    }
   }
 }
