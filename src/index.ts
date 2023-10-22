@@ -4,6 +4,8 @@ import * as os from 'os'
 import registry from 'get-registry'
 import { FFmpeg } from './ffmpeg'
 
+export * from './ffmpeg'
+
 const platform = os.platform()
 const arch = os.arch()
 
