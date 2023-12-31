@@ -52,6 +52,10 @@ export class FFmpegBuilder {
     }
     const child = spawn(this.executable, options, { stdio: 'pipe' })
     child.stderr.pipe(process.stderr)
+    child.stdin.on('error', function (err) {
+      if (['ECONNRESET', 'EPIPE', 'EOF'].includes(err.code)) return
+      return new Promise((_, reject) => reject(err))
+    })
     if (this._input instanceof Buffer) {
       child.stdin.write(this._input)
       child.stdin.end()
