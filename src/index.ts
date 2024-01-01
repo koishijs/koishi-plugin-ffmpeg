@@ -13,7 +13,7 @@ export const name = 'ffmpeg'
 
 export const Config = Schema.object({})
 
-export const using = ['downloads']
+export const inject = ['downloads']
 
 export async function apply(ctx: Context) {
   const task = ctx.downloads.nereid('ffmpeg', [
