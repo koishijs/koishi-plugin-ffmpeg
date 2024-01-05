@@ -62,6 +62,9 @@ export class FFmpegBuilder {
       return child.stdout as any
     } else {
       return new Promise<void | Buffer>((resolve, reject) => {
+        child.stdin.on('error', function (err) {
+          if (!['ECONNRESET', 'EPIPE', 'EOF'].includes(err.code)) reject(err)
+        })
         child.on('error', reject)
         if (type === 'file') {
           child.on('exit', code => code === 0 ? resolve() : reject(new Error(`exited with ${code}`)))
