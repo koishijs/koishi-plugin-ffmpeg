@@ -63,7 +63,7 @@ export class FFmpegBuilder {
     } else {
       return new Promise<void | Buffer>((resolve, reject) => {
         child.stdin.on('error', function (err) {
-          if (!['ECONNRESET', 'EPIPE', 'EOF'].includes(err.code)) reject(err)
+          if (!['ECONNRESET', 'EPIPE', 'EOF'].includes(err['code'])) reject(err)
         })
         child.on('error', reject)
         if (type === 'file') {
