@@ -11,6 +11,7 @@ declare module 'koishi' {
 interface RunReturn {
   file: Promise<void>
   buffer: Promise<Buffer>
+  info: Promise<Buffer>
   stream: Readable
 }
 
@@ -47,17 +48,18 @@ export class FFmpegBuilder {
     }
     if (type === 'file') {
       options.push(...[...this.outputOptions, path])
-    } else {
+    } else if (type !== 'info') {
       options.push(...[...this.outputOptions, '-'])
     }
     const child = spawn(this.executable, options, { stdio: 'pipe' })
-    child.stderr.pipe(process.stderr)
     if (this._input instanceof Buffer) {
       child.stdin.write(this._input)
       child.stdin.end()
     } else if (this._input instanceof Readable) {
       this._input.pipe(child.stdin)
     }
+    // TODO: pipe stderr to logger
+    // https://github.com/shigma/reggol/issues/7
     if (type === 'stream') {
       return child.stdout as any
     } else {
@@ -66,13 +68,19 @@ export class FFmpegBuilder {
           if (!['ECONNRESET', 'EPIPE', 'EOF'].includes(err['code'])) reject(err)
         })
         child.on('error', reject)
+        let stream: Readable
         if (type === 'file') {
           child.on('exit', code => code === 0 ? resolve() : reject(new Error(`exited with ${code}`)))
         } else if (type === 'buffer') {
+          stream = child.stdout
+        } else if (type === 'info') {
+          stream = child.stderr
+        }
+        if (stream) {
           const buffer = []
-          child.stdout.on('data', data => buffer.push(data))
-          child.stdout.on('end', () => resolve(Buffer.concat(buffer)))
-          child.stdout.on('error', reject)
+          stream.on('data', data => buffer.push(data))
+          stream.on('end', () => resolve(Buffer.concat(buffer)))
+          stream.on('error', reject)
         }
       }) as any
     }
