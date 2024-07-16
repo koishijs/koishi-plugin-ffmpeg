@@ -1,8 +1,9 @@
 import { Context, Schema } from 'koishi'
 import {} from 'koishi-plugin-downloads'
-import * as os from 'os'
+import * as os from 'node:os'
 import registry from 'get-registry'
 import { FFmpeg } from './ffmpeg'
+import { existsSync } from 'node:fs'
 
 export * from './ffmpeg'
 
@@ -11,16 +12,27 @@ const arch = os.arch()
 
 export const name = 'ffmpeg'
 
-export const Config = Schema.object({})
+export interface Config {
+  path?: string
+}
+
+export const Config: Schema<Config> = Schema.object({
+  path: Schema.path().default(globalThis.process?.env?.FFMPEG_PATH).description('如果该配置项指定的 FFmpeg 不存在，将会自动获取它')
+})
 
 export const inject = ['downloads']
 
-export async function apply(ctx: Context) {
-  const task = ctx.downloads.nereid('ffmpeg', [
-    `npm://@koishijs-assets/ffmpeg?registry=${await registry()}`
-  ], bucket())
-  const path = await task.promise
-  const executable = platform === 'win32' ? `${path}/ffmpeg.exe` : `${path}/ffmpeg`
+export async function apply(ctx: Context, cfg: Config) {
+  let executable: string
+  if (cfg.path && existsSync(cfg.path)) {
+    executable = cfg.path
+  } else {
+    const task = ctx.downloads.nereid('ffmpeg', [
+      `npm://@koishijs-assets/ffmpeg?registry=${await registry()}`
+    ], bucket())
+    const path = await task.promise
+    executable = platform === 'win32' ? `${path}/ffmpeg.exe` : `${path}/ffmpeg`
+  }
   ctx.plugin(FFmpeg, executable)
 }
 

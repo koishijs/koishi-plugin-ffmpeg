@@ -1,6 +1,6 @@
 import { Context, Service } from 'koishi'
-import { spawn } from 'child_process'
-import { Readable } from 'stream'
+import { spawn } from 'node:child_process'
+import { Readable } from 'node:stream'
 
 declare module 'koishi' {
   interface Context {
